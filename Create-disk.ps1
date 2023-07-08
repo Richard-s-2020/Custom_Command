@@ -2,6 +2,8 @@ function Create-Disk {
     param (
         [string]$Disk
     )
+    
+    $reload_Functions = "C:\Users\Richa\OneDrive\Documenten\WindowsPowerShell\Scripts\functions"
 
     # Check if running as administrator
     # This will self elevate the script with a UAC prompt since it needs to be run as an Administrator to function properly.
@@ -16,14 +18,17 @@ function Create-Disk {
         Start-Sleep -Seconds 1
 
         # Build the argument list for self-elevation
-        $command = "Import-Module C:\Users\Richa\OneDrive\Documenten\WindowsPowerShell\Scripts\functions\load_Function.ps1; Create-CSV_User -disk $disk"
-        $argument = "-NoProfile -ExecutionPolicy Bypass -Command `"$command`""
+        $command = @"
+        Import-Module "$reload_Functions\load_Function.ps1";
+        write-host 'Import model Create-Disk';
+        Create-Disk -Disk $Disk;
+"@
+        $argument = "-NoProfile -ExecutionPolicy Bypass -NoExit -Command `"$command`""
 
         Start-Process -FilePath "powershell.exe" -ArgumentList $argument -Verb RunAs
-
+        return
     }
-    else {
-        # Continue with the rest of your script
-        Start-Process -FilePath "diskpart.exe" -Verb RunAsAdmin
-    }
+    # Continue with the rest of your script
+    Start-Process -FilePath "diskpart.exe" -ArgumentList "list disk" -Verb RunAs
+    $tets = Read-Host "e"
 }

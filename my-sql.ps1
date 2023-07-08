@@ -111,5 +111,3 @@ function MY-SQL {
     }
     Vraag
 }
-
-MY-SQL
