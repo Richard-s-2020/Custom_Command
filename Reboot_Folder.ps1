@@ -1,3 +1,4 @@
+
 function RE-Create-Folder {
     param (
         # Import CSV/Automatically
@@ -20,7 +21,9 @@ function RE-Create-Folder {
         [ValidateSet("False", "True")]
         [string]$Share,
         
-        
+        #00F090
+        #F00C0C
+
         [string]$Permissions_Account,    
         
         #antwere for if you ate on server core
